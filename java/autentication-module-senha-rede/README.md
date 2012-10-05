@@ -1,4 +1,4 @@
 openam-lab
 ==========
 
-Prova de conceita de implementação de single sing-on em ambiente heterogêneo (java + ASP)
+Implementação de um autentication module para prova de conceito do openam autenticando no ambiente senha-rede.
