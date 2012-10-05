@@ -1,4 +1,4 @@
 openam-lab
 ==========
 
-Prova de conceita de implementação de single sing-on em ambiente heterogêneo (java + ASP)
+Cliente ASP para implementação de prova de conceito de single sing-on utilizando openam.
