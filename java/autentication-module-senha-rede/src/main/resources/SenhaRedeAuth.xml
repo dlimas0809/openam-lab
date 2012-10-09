@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE ModuleProperties PUBLIC "=//iPlanet//Authentication Module Properties XML Interface 1.0 DTD//EN"
+          "jar://com/sun/identity/authentication/Auth_Module_Properties.dtd">
+<!-- 
+ARQUIVO DE CONFIGURAÇÃO DO PROCESSO DE LOGIN
+
+Este arquivo define as perguntas que são feitas ao usuário durante um processo de autenticação. Ele deve
+ter o mesmo nome que a classe de autenticação (neste caso SenhaRedeAuth).
+
+No nosso caso precisamos apenas perguntar o usuário (normalmente o CPF) e a senha para autenticar
+o usuário na senha rede.
+
+ -->
+<ModuleProperties moduleName="SenhaRede" version="1.0" > 
+    <!-- Cada "Callback" é uma fase no processo de login. O atributo "order" determina o índice da fase.
+    Fases começam em 1 e são sempre positivas. Aqui temos apenas uma fase, mas opcionalmente poderiamos criar
+    uma nova entrada "<Callbacks>" com order="2" para, por exemplo, pedir que o usuário insira um token USB
+    para autenticação.
+     -->
+    <Callbacks length="2" order="1" timeout="120" 
+        header="Este servidor é autenticado através de Senha Rede" >
+        <NameCallback> 
+            <Prompt> Usuário: </Prompt> 
+        </NameCallback>
+        <PasswordCallback echoPassword="false" > 
+            <Prompt> Senha: </Prompt>
+        </PasswordCallback>
+    </Callbacks>
+</ModuleProperties>
