@@ -7,6 +7,7 @@ import javax.inject.Inject;
 
 import br.gov.frameworkdemoiselle.annotation.NextView;
 import br.gov.frameworkdemoiselle.annotation.PreviousView;
+import br.gov.frameworkdemoiselle.security.RequiredPermission;
 import br.gov.frameworkdemoiselle.stereotype.ViewController;
 import br.gov.frameworkdemoiselle.template.AbstractListPageBean;
 import br.gov.frameworkdemoiselle.transaction.Transactional;
@@ -15,8 +16,9 @@ import br.gov.serpro.openam.singlesingonclient.business.BookmarkBC;
 import br.gov.serpro.openam.singlesingonclient.domain.Bookmark;
 
 @ViewController
-@NextView("/bookmark_edit.xhtml")
-@PreviousView("/bookmark_list.xhtml")
+@NextView("/pages/bookmark_edit.xhtml")
+@PreviousView("/pages/bookmark_list.xhtml")
+@RequiredPermission
 public class BookmarkListMB extends AbstractListPageBean<Bookmark, Long> {
 
 	private static final long serialVersionUID = 1L;

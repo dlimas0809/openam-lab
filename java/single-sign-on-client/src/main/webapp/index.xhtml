@@ -1,11 +1,31 @@
-<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:p="http://primefaces.org/ui" xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:ui="http://java.sun.com/jsf/facelets" template="/template/main.xhtml">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	template="/template/mainLogin.xhtml">
 
 	<ui:define name="body">
-		<p:panel>
-			#{messages['main.app.welcome']}
-		</p:panel>
+
+		<h:form prependId="false">
+			<p:fieldset toggleable="false" toggleSpeed="500">
+				<h:panelGrid id="fields" columns="3">
+				
+					<h:outputLabel value="#{messages['bookmark.security.label.login']}: " for="login" styleClass="text-input" />
+					<h:inputText id="login" value="#{credential.login}" />
+					<p:message for="login" />
+
+					<h:outputLabel value="#{messages['bookmark.security.label.senha']}: " for="senha" styleClass="text-input" />
+					<h:inputSecret id="senha" value="#{credential.password}" />
+					<p:message for="senha" />
+
+					<p:commandButton value="#{messages['bookmark.security.label.login']}" action="#{loginMB.login}"/>
+
+				</h:panelGrid>
+			</p:fieldset>
+
+		</h:form>
+
 	</ui:define>
 
 </ui:composition>

@@ -3,6 +3,7 @@ package br.gov.serpro.openam.singlesingonclient.view;
 import javax.inject.Inject;
 
 import br.gov.frameworkdemoiselle.annotation.PreviousView;
+import br.gov.frameworkdemoiselle.security.RequiredPermission;
 import br.gov.frameworkdemoiselle.stereotype.ViewController;
 import br.gov.frameworkdemoiselle.template.AbstractEditPageBean;
 import br.gov.frameworkdemoiselle.transaction.Transactional;
@@ -11,7 +12,8 @@ import br.gov.serpro.openam.singlesingonclient.business.BookmarkBC;
 import br.gov.serpro.openam.singlesingonclient.domain.Bookmark;
 
 @ViewController
-@PreviousView("/bookmark_list.xhtml")
+@PreviousView("/pages/bookmark_list.xhtml")
+@RequiredPermission
 public class BookmarkEditMB extends AbstractEditPageBean<Bookmark, Long> {
 
 	private static final long serialVersionUID = 1L;

@@ -11,10 +11,16 @@
 <h:body style="background-color:#f1f1f1">
 	<table style="width: 100%">
 		<tr>
-			<td height="70" align="left"><a href="index.jsf"><img src="images/logo.png" border="0" /></a></td>
+			<td height="70" align="left">
+				<h:form>
+					<h:commandLink action="/welcome.jsf">
+						<h:graphicImage value="/images/logo.png" style="border: 0px"/>
+					</h:commandLink>
+				</h:form>
+			</td>
 		</tr>
 		<tr>
-			<td height="20"><ui:include src="/menu.xhtml" /></td>
+			<td height="20"><ui:include src="/template/menu.xhtml" /></td>
 		</tr>
 		<tr valign="top">
 			<td height="400"><ui:insert name="body" /></td>
