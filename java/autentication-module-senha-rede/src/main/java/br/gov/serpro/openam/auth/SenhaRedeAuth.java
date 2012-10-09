@@ -28,8 +28,8 @@ public class SenhaRedeAuth extends AMLoginModule {
 	
 	private static final int ESTADO_LOGIN = 1;
 	
-	private static final String[] USUARIOS = new String[]{"danilo,wilson,eudes"}; //$NON-NLS-1$
-	private static final String[] SENHAS = new String[]{"1234,5678,9012"}; //$NON-NLS-1$
+	private static final String[] USUARIOS = new String[]{"danilo","wilson","eudes"}; //$NON-NLS-1$
+	private static final String[] SENHAS = new String[]{"1234","5678","9012"}; //$NON-NLS-1$
 	
 	private Debug debug = Debug.getInstance(SenhaRedeAuth.class.getName());
 	
