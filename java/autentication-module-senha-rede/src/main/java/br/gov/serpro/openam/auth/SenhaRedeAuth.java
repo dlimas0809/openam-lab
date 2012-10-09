@@ -13,6 +13,7 @@ import com.sun.identity.authentication.spi.AMLoginModule;
 import com.sun.identity.authentication.spi.AuthLoginException;
 import com.sun.identity.authentication.spi.InvalidPasswordException;
 import com.sun.identity.authentication.util.ISAuthConstants;
+import com.sun.identity.shared.debug.Debug;
 
 /**
  * 
@@ -27,8 +28,10 @@ public class SenhaRedeAuth extends AMLoginModule {
 	
 	private static final int ESTADO_LOGIN = 1;
 	
-	private static final String[] USUARIOS = new String[]{"danilo,wilson,eudes"};
-	private static final String[] SENHAS = new String[]{"1234,5678,9012"};
+	private static final String[] USUARIOS = new String[]{"danilo,wilson,eudes"}; //$NON-NLS-1$
+	private static final String[] SENHAS = new String[]{"1234,5678,9012"}; //$NON-NLS-1$
+	
+	private Debug debug = Debug.getInstance(SenhaRedeAuth.class.getName());
 	
 	//Segundo a documentação, instâncias de SenhaRedeAuth não são reutilizadas, uma nova é criada para processar cada
 	//login individual, por isso é permitido que este objeto guarde estados.
@@ -39,6 +42,9 @@ public class SenhaRedeAuth extends AMLoginModule {
 		//Deve retornar uma instância da interface java.security.Principal, em nosso
 		//caso criamos a classe SenhaRedePrincipal que contém o nome do usuário. Em nosso exemplo
 		//o nome é igual ao login.
+		if(debug.messageEnabled()){
+			debug.message(Messages.getString("senha-rede.debug-user-principal")); //$NON-NLS-1$
+		}
 		return new SenhaRedePrincipal(usuarioLogado);
 	}
 
@@ -72,18 +78,27 @@ public class SenhaRedeAuth extends AMLoginModule {
 			for (int i=0; i<USUARIOS.length; i++){
 				if (USUARIOS[i].equals(username) && SENHAS[i].equals(password) ){
 					//A constante que informa o OpenAM que as informações fornecidas conferem.
+					if(debug.messageEnabled()){
+						debug.message(Messages.getString("senha-rede.debug-autenticacao-sucesso")+username); //$NON-NLS-1$
+					}
 					usuarioLogado = username;
 					return ISAuthConstants.LOGIN_SUCCEED;
 				}
 			}
 			
 			//Se chegarmos aqui, o login informado não confere com nenhum login de teste.
-			throw new InvalidPasswordException(Messages.getString("senha-rede.password-invalido"));
+			if(debug.messageEnabled()){
+				debug.warning(Messages.getString("senha-rede.debug-autenticacao-falha")+username); //$NON-NLS-1$
+			}
+			throw new InvalidPasswordException(Messages.getString("senha-rede.password-invalido")); //$NON-NLS-1$
 			
 		default:
 			//Só temos uma fase de callback, indexada com "1". Se chegar aqui então o módulo
 			//passou uma fase inválida e devemos reportar o erro.
-			throw new AuthLoginException(Messages.getString("senha-rede.estado-invalido"));
+			if(debug.messageEnabled()){
+				debug.error(Messages.getString("senha-rede.debug-estado-invalido")+state); //$NON-NLS-1$
+			}
+			throw new AuthLoginException(Messages.getString("senha-rede.estado-invalido")); //$NON-NLS-1$
 		}
 		
 	}
