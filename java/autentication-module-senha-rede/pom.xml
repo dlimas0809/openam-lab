@@ -29,10 +29,10 @@
 	</dependencies>
 		
 	<repositories>
-        <repository>
-            <id>forgerock</id>
-            <url>http://repo.forgerock.org</url>
-        </repository>
-    </repositories>
+		<repository>
+		<id>forgerock</id>
+		<url>http://repo.forgerock.org</url>
+		</repository>
+	</repositories>
     
 </project>
