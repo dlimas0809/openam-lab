@@ -75,6 +75,7 @@ public class SenhaRedeAuth extends AMLoginModule {
 			String username = nc.getName();
 			String password = new String(pc.getPassword());
 			
+			//TODO Substituir este código pela verdadeira checagem no Senha Rede
 			for (int i=0; i<USUARIOS.length; i++){
 				if (USUARIOS[i].equals(username) && SENHAS[i].equals(password) ){
 					//A constante que informa o OpenAM que as informações fornecidas conferem.

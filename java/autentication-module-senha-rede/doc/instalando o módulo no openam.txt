@@ -49,7 +49,7 @@ Todos os comandos supõem que o WAR do OpenAM foi extraido na pasta "deployments"
 
 21-Nosso módulo está pronto para usar.
    Para fazer o login direto no OpenAM e testar nosso módulo use a URL abaixo
-   http://dancovich.gov.br:8080/openam/UI/Login?realm=SenhaRedeRealm&service=senhaRedeService
+   http://[nosso_dns_definido]/openam/UI/Login?realm=SenhaRedeRealm&service=senhaRedeService
    Esta URL vai apresentar um formulário onde você informará o login e senha.
 
    Para autenticar usuários via REST basta acessar a url no formato abaixo
