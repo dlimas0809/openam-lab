@@ -3,7 +3,7 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets" template="/template/main.xhtml">
 
 	<ui:define name="body">
-		<p:panel>
+		<p:panel rendered="#{securityContext.hasPermission(null, null)}">
 			#{messages['main.app.welcome']}
 		</p:panel>
 	</ui:define>
