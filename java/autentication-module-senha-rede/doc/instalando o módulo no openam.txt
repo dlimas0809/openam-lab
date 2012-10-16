@@ -1,0 +1,65 @@
+INSTALANDO O MÓDULO NO OPENAM
+
+Após compilar o módulo e criar o arquivo jar, estes são os passos necessários para instala-lo no OpenAM.
+Todos os comandos supõem que o WAR do OpenAM foi extraido na pasta "deployments" do Jboss 7 como "openam.war".
+
+1-Baixar o módulo "tools" do OpenAM. Se você baixou o zip completo, o módulo tools estará incluso. Caso contrário o link para apenas o módulo tools é http://download.forgerock.org/downloads/openam/openam10/10.0.0/ssoAdminTools_10.0.0.zip
+
+2-Copiar o arquivo "SenhaRedeAuth.xml" para a pasta "[openam.war]/config/auth/default". O arquivo está dentro do projeto na pasta "src/main/resources"
+
+3-Copiar o jar do módulo compilado para [openam.war]/WEB-INF/lib
+
+4-Extrarir o modulo tools em uma pasta e dentro dele extrair o arquivo "ssoAdminTools.zip".
+
+5-Rodar o setup dentro desta pasta. Quando ele perguntar a pasta de config, forneça a mesma informação que você passou no configuration wizard do OpenAM. Se você seguiu o guia de instalação do Jboss 7, então forneça o mesmo valor presente no arquivo WEB-INF/classes/bootstrap.properties, na propriedade "configuration.dir". As outras perguntas pode responder o padrão.
+
+6-Ainda na pasta onde os tools foram extraidos, acesse a pasta [pasta_dos_tools]/openam/bin
+
+7-Crie um arquivo, pode ter qualquer nome (ex: "senha.txt") e digite apenas a senha de login do usuário "amadmin" no OpenAM. No nosso exemplo o arquivo terá 11111111. O motivo é que o comando que vamos rodar agora pede a senha do usuário, mas só a aceita se ela estiver dentro de um arquivo de texto.
+
+8-O arquivo de senha acima deve ter uma permissão específica de readonly apenas para o dono, rode "chmod 400 senha.txt" para deixar a permissão correta.
+
+9-Rode o comando
+   ./ssoadm create-svc -u amadmin -f senha.txt -X [caminho_para_arquivo_amAuthSenhaRedeAuth.xml]
+   Obs: Este arquivo "amAuthSenhaRedeAuth.xml" está no projeto dentro da pasta "src/main/resources", então basta passar o caminho dele no argumento. Em nosso caso ficou: /home/81986912515/git/openam-lab/java/autentication-module-senha-rede/src/main/resources/amAuthSenhaRedeAuth.xml
+   O comando deve retornar "Service was added"
+   
+10-Rode este segundo comando
+   ./ssoadm register-auth-module -u amadmin -f senha.txt -a br.gov.serpro.openam.auth.SenhaRedeAuth
+   
+11-Se tudo der certo o comando vai retornar "Authentication module was registered". Reinicie o Jboss e o módulo deve aparecer como uma das opções para criar um novo chain de autenticação.
+
+12-Entre no OpenAM e logue como administrador (usando o login amadmin).
+
+13-Acesse "Access Control" e escolha a opção de criar um novo realm. Dê a este Realm o nome que quiser, mas no nosso exemplo daremos "SenhaRedeRealm".
+
+14-Entre no novo realm e escolha "Authentication"
+
+15-Na tela que aparece, aperte o botão "All Core Settings". Na nova tela a primeira opção é "User Profile". Marque a opção "Ignored" para User Profile. Isso vai dizer que em nosso realm após nosso módulo autenticar o usuário, ele não precisa existir em nenhum datastore do próprio OpenAM (já o autenticamos no senha rede, então isso não é necessário). Salve e aperte "Back to Authentication".
+
+16-Desça até Module Instances e crie um novo module.
+
+17-Dê o nome do módulo de SenhaRede e escolha o tipo "Senha Rede Authentication Module", este tipo é nosso módulo que instalamos acima. Aperte OK ao finalizar. 
+
+18-Desça até a seção "Authentication Chaining" e crie um novo chain, dê o nome de "senhaRedeService".
+
+19-Na nova tela onde há "0 Items" adicione um novo item. Na combo que aparece escolha nosso recém criado módulo, SenhaRede. Em "Criteria" escolhe "REQUIRED". Deixe options em branco. Salve e aperte "Back to Authentication". 
+
+20-Salve esta tela e pode fechar o browser, concluímos esta etapa.
+
+21-Nosso módulo está pronto para usar.
+   Para fazer o login direto no OpenAM e testar nosso módulo use a URL abaixo
+   http://[nosso_dns_definido]/openam/UI/Login?realm=SenhaRedeRealm&service=senhaRedeService
+   Esta URL vai apresentar um formulário onde você informará o login e senha.
+
+   Para autenticar usuários via REST basta acessar a url no formato abaixo
+   http://[nosso_dns_definido]/openam/identity/authenticate?username=[usuario]&password=[senha]&uri=realm%3DSenhaRedeRealm%26service%3DsenhaRedeService
+   
+   Obs: Explicando esta longa URL. [usuario] e [senha] são autoexplicativos. A variável "uri" contém de forma codificada os mesmos parâmetros que passamos na URL para autenticar direto no OpenAM, ou seja, "realm" e "service". Os parâmetros devem ser passados codificados para o parâmetro "uri" desta url, por isso o uso dos códigos %3d e %26.
+   
+   Ao usar a URL REST, a resposta é um token id que deve ser armazenada pelo cliente.
+   Se quiser fazer logout basta chamar a url:
+   http://[nosso_dns_definido]/openam/identity/logout?subjectid=[token_recebido]
+   
+   Para obter outras informações do usuário, basta chamar a URL abaixo, que vai retornar uma lista de atributos definidos pelo OpenAM.
+   http://[nosso_dns_definido]/openam/identity/attributes?subjectid=[token_recebido]
