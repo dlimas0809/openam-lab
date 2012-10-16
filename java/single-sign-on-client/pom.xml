@@ -20,25 +20,24 @@
 	</parent>
 
 	<dependencies>
+	
+		<dependency>
+			<groupId>org.forgerock.openam</groupId>
+			<artifactId>openssoclientsdk</artifactId>
+			<version>10.0.0</version>
+			<scope>compile</scope>
+		</dependency>
+		
 		<dependency>
 			<groupId>br.gov.frameworkdemoiselle</groupId>
 			<artifactId>demoiselle-jpa</artifactId>
 			<scope>compile</scope>
 		</dependency>
-		<!-- If you are using a JTA transaction then use this extension -->
-		<!--
-		<dependency>
-		    <groupId>br.gov.frameworkdemoiselle</groupId>
-		    <artifactId>demoiselle-jta</artifactId>
-		    <scope>compile</scope>
-		</dependency>
-		-->
 		<dependency>
 			<groupId>org.primefaces</groupId>
 			<artifactId>primefaces</artifactId>
 			<scope>compile</scope>
 		</dependency>
-
 		<dependency>
 			<groupId>br.gov.frameworkdemoiselle.component</groupId>
 			<artifactId>demoiselle-junit</artifactId>
@@ -50,5 +49,14 @@
 			<artifactId>slf4j-log4j12</artifactId>
 			<scope>test</scope>
 		</dependency>
+		
 	</dependencies>
+	
+	<repositories>
+        <repository>
+            <id>forgerock</id>
+            <url>http://repo.forgerock.org</url>
+        </repository>
+    </repositories>
+    
 </project>
