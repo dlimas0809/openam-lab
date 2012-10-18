@@ -85,7 +85,7 @@ public class OpenAMAuthenticatorClient implements Serializable {
 		
 		// TODO Rever parametrização para geração de cookie
 		Cookie cookie = new Cookie("iPlanetDirectoryPro", authContext.getSSOToken().getTokenID().toString());
-		cookie.setDomain(".serpro.org");
+		cookie.setDomain(".sdr.serpro");
 		cookie.setPath("/");
 		
 		((HttpServletResponse) Beans.getReference(HttpServletResponse.class)).addCookie(cookie);
