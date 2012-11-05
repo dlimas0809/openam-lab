@@ -122,7 +122,7 @@ public class OpenAMAuthenticatorClient implements Serializable {
 
 	public boolean checkLogin(HttpServletRequest request) {
 		
-		boolean validated = true;
+		boolean validated = false;
 		
 		try {
 			
@@ -141,7 +141,7 @@ public class OpenAMAuthenticatorClient implements Serializable {
 			
 		} catch (Exception e) {
 			logger.info("Erro ao validar Login");
-			validated = true;
+			validated = false;
 		}		
 
 		logger.debug("Checagem de Login concluída");
