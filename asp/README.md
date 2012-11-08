@@ -1,4 +1,4 @@
 openam-lab
 ==========
 
-Cliente ASP para implementação de prova de conceito de single sing-on utilizando openam.
+Cliente ASP para implementação de prova de conceito de single sign-on utilizando OpenAM.
