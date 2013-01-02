@@ -28,6 +28,9 @@ public class OpenAMAuthenticator implements Authenticator {
 	public boolean authenticate() {
 
 		try {
+			
+//			boolean b = SenhaRedeTibcoClient.authenticate("SISCOMEX", "USEREX", "senha123");
+//			System.out.println(b);
 
 			return amAuthenticatorClient.login(credential.getLogin(), credential.getPassword());
 
